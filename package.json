@@ -1,0 +1,30 @@
+{
+  "name": "cra-ssr-code-splitting",
+  "version": "0.1.0",
+  "private": false,
+  "homepage": "./",
+  "dependencies": {
+    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react-app": "^3.1.1",
+    "express": "^4.16.2",
+    "file-loader": "^1.1.6",
+    "ignore-styles": "^5.0.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-loadable": "^5.3.1",
+    "react-redux": "^5.0.6",
+    "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "url-loader": "^0.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "server": "NODE_ENV=production node server/bootstrap.js"
+  }
+}
