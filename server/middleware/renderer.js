@@ -52,7 +52,7 @@ export default (store) => (req, res, next) => {
                 // write the React app
                 .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
                 // write the string version of our state
-                .replace('__SERVER_REDUX_STATE__', reduxState)
+                .replace('__REDUX_STATE__={}', `__REDUX_STATE__=${reduxState}`)
                 // append the extra js assets
                 .replace('</body>', extraChunks.join('') + '</body>')
         );
