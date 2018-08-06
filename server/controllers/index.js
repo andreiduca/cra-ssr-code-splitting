@@ -27,4 +27,8 @@ router.use(express.static(
     { maxAge: '30d' },
 ));
 
+// any other route should be handled by react-router, so serve the index page
+router.use('*', actionIndex);
+
+
 export default router;
