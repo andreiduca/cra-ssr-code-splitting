@@ -30,6 +30,10 @@ export default (store) => async (req, res) => {
     const modules = [];
     const routerContext = {};
 
+    if (htmlContext instanceof Error) {
+      return htmlContext;
+    }
+
     // render the app as a string
     const html = await ReactDOMServer.renderToString(
         <Loadable.Capture report={m => modules.push(m)}>
@@ -52,7 +56,7 @@ export default (store) => async (req, res) => {
     const helmet = await Helmet.renderStatic();
 
     // now inject the rendered app into our html and send it to the client
-    return await htmlContext
+    return htmlContext
             // write the React app
             .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
             // write the string version of our state

@@ -22,10 +22,10 @@ const init = async () => {
       path: '/{filepath*}',
       config: {
         auth: false,
-      //   cache: {
-      //     expiresIn: 24 * 60 * 60 * 1000,
-      //     privacy: 'public'
-      //   }
+        cache: {
+          expiresIn: 24 * 60 * 60 * 1000,
+          privacy: 'public'
+        }
       },
       handler: {
         directory: {
@@ -36,18 +36,32 @@ const init = async () => {
       }
   });
 
-  server.route({
+  server.route([{
       method: 'GET',
       path:'/',
       handler: async (request, reply) => {
         const store = configureStore();
         const htmlToRender = await serverRenderer(store)(request, reply);
         if(!htmlToRender){
-          console.log('Error occured!');
+          console.log(`Error occured!`);
         }
+        console.log(`${JSON.stringify(request.params)}`);
         return htmlToRender
       }
-  });
+  }, {
+      method: 'GET',
+      path:'/another',
+      handler: async (request, reply) => {
+        return reply.redirect('/');
+        // const store = configureStore();
+        // const htmlToRender = await serverRenderer(store)(request, reply);
+        // if(!htmlToRender){
+        //   console.log(`Error occured!`);
+        // }
+        // console.log(`${JSON.stringify(request.params)} - ${server.info.uri}`);
+        // return htmlToRender
+      }
+  }]);
 
   await server.start();
   console.log('Server running on %s', server.info.uri);
