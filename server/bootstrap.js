@@ -10,4 +10,5 @@ require('@babel/register')({
         'react-loadable/babel'
     ]
 });
-require('./index');
+// require('./index');
+require('./index-hapi');

@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import Loadable from 'react-loadable';
@@ -20,51 +21,44 @@ const path = require("path");
 const fs = require("fs");
 
 
-export default (store) => (req, res, next) => {
+export default (store) => async (req, res) => {
     // get the html file created with the create-react-app build
-    const filePath = path.resolve(__dirname, '..', '..', 'build', 'index.html');
+    const filePath = await path.resolve(__dirname, '..', '..', 'build', 'index.html');
+    // console.log(`error logged! ${filePath}`);
 
-    fs.readFile(filePath, 'utf8', (err, htmlData) => {
-        if (err) {
-            console.error('err', err);
-            return res.status(404).end()
-        }
+    const htmlContext = await fs.readFileSync(filePath, 'utf8');
+    const modules = [];
+    const routerContext = {};
 
-        const modules = [];
-        const routerContext = {};
+    // render the app as a string
+    const html = await ReactDOMServer.renderToString(
+        <Loadable.Capture report={m => modules.push(m)}>
+            <ReduxProvider store={store}>
+                <StaticRouter location={req.baseUrl} context={routerContext}>
+                    <App/>
+                </StaticRouter>
+            </ReduxProvider>
+        </Loadable.Capture>
+    );
 
-        // render the app as a string
-        const html = ReactDOMServer.renderToString(
-            <Loadable.Capture report={m => modules.push(m)}>
-                <ReduxProvider store={store}>
-                    <StaticRouter location={req.baseUrl} context={routerContext}>
-                        <App/>
-                    </StaticRouter>
-                </ReduxProvider>
-            </Loadable.Capture>
-        );
+    // get the stringified state
+    const reduxState = await JSON.stringify(store.getState());
 
-        // get the stringified state
-        const reduxState = JSON.stringify(store.getState());
+    // map required assets to script tags
+    const extraChunks = await extractAssets(manifest, modules)
+        .map(c => `<script type="text/javascript" src="/${c}"></script>`);
 
-        // map required assets to script tags
-        const extraChunks = extractAssets(manifest, modules)
-            .map(c => `<script type="text/javascript" src="/${c}"></script>`);
+    // get HTML headers
+    const helmet = await Helmet.renderStatic();
 
-        // get HTML headers
-        const helmet = Helmet.renderStatic();
-
-        // now inject the rendered app into our html and send it to the client
-        return res.send(
-            htmlData
-                // write the React app
-                .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
-                // write the string version of our state
-                .replace('__REDUX_STATE__={}', `__REDUX_STATE__=${reduxState}`)
-                // append the extra js assets
-                .replace('</body>', extraChunks.join('') + '</body>')
-                // write the HTML header tags
-                .replace('<title></title>', helmet.title.toString() + helmet.meta.toString())
-        );
-    });
+    // now inject the rendered app into our html and send it to the client
+    return await htmlContext
+            // write the React app
+            .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+            // write the string version of our state
+            .replace('__REDUX_STATE__={}', `__REDUX_STATE__=${reduxState}`)
+            // append the extra js assets
+            .replace('</body>', extraChunks.join('') + '</body>')
+            // write the HTML header tags
+            .replace('<title></title>', helmet.title.toString() + helmet.meta.toString());
 }
