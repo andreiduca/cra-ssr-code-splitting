@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "npm run build && SET NODE_ENV=production && node server/bootstrap.js",
+    "server": "npm run build && SET NODE_ENV=production && nodemon server/bootstrap.js",
     "serve:development": "npm run build && SET NODE_ENV=development && nodemon server/bootstrap.js"
   },
   "browserslist": [

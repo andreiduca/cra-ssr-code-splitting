@@ -31,7 +31,7 @@ const AsyncPageAnother = Loadable({
 class App extends Component {
     componentDidMount() {
         if(!this.props.message) {
-            this.props.updateMessage("Hi, I'm from client!");
+            this.props.updateMessage(`This is client side rendering!`);
         }
     }
 

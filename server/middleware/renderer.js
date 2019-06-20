@@ -6,7 +6,7 @@ import { StaticRouter } from 'react-router';
 import { Helmet } from 'react-helmet';
 
 // import our main App component
-import App from '../../src/App';
+import App from '../../src/App.jsx';
 
 // import the manifest generated with the create-react-app build
 import manifest from '../../build/asset-manifest.json';
