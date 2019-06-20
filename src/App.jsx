@@ -5,10 +5,10 @@ import { withRouter } from 'react-router';
 import { Route, Switch, NavLink } from 'react-router-dom';
 
 import { setMessage } from './store/appReducer';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/scss/bootstrap.scss';
 
 // import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 
 const AsyncComponent = Loadable({
