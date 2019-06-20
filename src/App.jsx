@@ -5,9 +5,10 @@ import { withRouter } from 'react-router';
 import { Route, Switch, NavLink } from 'react-router-dom';
 
 import { setMessage } from './store/appReducer';
+import 'bootstrap/scss/bootstrap.scss';
 
 // import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 
 const AsyncComponent = Loadable({
@@ -31,7 +32,7 @@ const AsyncPageAnother = Loadable({
 class App extends Component {
     componentDidMount() {
         if(!this.props.message) {
-            this.props.updateMessage("Hi, I'm from client!");
+            this.props.updateMessage(`This is client side rendering!`);
         }
     }
 

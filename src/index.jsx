@@ -13,9 +13,9 @@ const store = configureStore( window.__REDUX_STATE__ || {} );
 
 const AppBundle = (
     <ReduxProvider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ReduxProvider>
 );
 

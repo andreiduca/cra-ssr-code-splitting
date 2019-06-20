@@ -3,7 +3,7 @@ import Loadable from 'react-loadable';
 
 import indexController from './controllers/index';
 
-const PORT = 3000;
+const PORT = 1030;
 
 // initialize the application and create the routes
 const app = express();
@@ -14,9 +14,9 @@ app.use(indexController);
 Loadable.preloadAll().then(() => {
     app.listen(PORT, (error) => {
         if (error) {
-            return console.log('something bad happened', error);
+            return console.log(`something bad happened`, error);
         }
 
-        console.log("listening on " + PORT + "...");
+        console.log(`listening on ${PORT}...`);
     });
 });
