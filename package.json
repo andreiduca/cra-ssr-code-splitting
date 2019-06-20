@@ -9,6 +9,7 @@
     "@hapi/inert": "^5.2.0",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "file-loader": "^4.0.0",
     "ignore-styles": "^5.0.1",
@@ -20,6 +21,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.0.1",
+    "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "url-loader": "^2.0.0"
